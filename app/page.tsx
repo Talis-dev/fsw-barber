@@ -5,11 +5,10 @@ import { Button } from "./_components/ui/button";
 import { Input } from "./_components/ui/input";
 import Image from "next/image";
 import { Card, CardContent } from "./_components/ui/card";
-import { Badge } from "./_components/ui/badge"
-import { Avatar } from "./_components/ui/avatar";
-import { AvatarImage } from "./_components/ui/avatar";
 import { db } from "./_lib/prisma";
 import BarbershopItem from "./_components/barbershop-item";
+import {quickSearchOptions} from "./_constants/search"
+import BookingItem from "./_components/booking-item";
 
 
 const Home = async () => {
@@ -37,35 +36,13 @@ return <div>
         </div>
         {/*BUSCA RAPIDA */}
         <div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden " >
-            <Button className=" gap-2 " variant="secondary">
-                <Image src="/cabelo.svg" width={16} height={16} alt="cabelo"/>
-                Cabelo
-            </Button>
+           {quickSearchOptions.map(option =><Button 
+           className=" gap-2 " variant="secondary" key={option.title}>
+          <Image src={option.imageUrl} width={16} height={16} alt="cabelo"/>
+            {option.title}
+            </Button>)}
 
-            <Button className=" gap-2 " variant="secondary">
-                <Image src="/barba.svg" width={16} height={16} alt="cabelo"/>
-                Barba
-            </Button>
 
-            <Button className=" gap-2 " variant="secondary">
-                <Image src="/acabamento.svg" width={16} height={16} alt="cabelo"/>
-                Acabamento
-            </Button>
-
-            <Button className=" gap-2 " variant="secondary">
-                <Image src="/sobrancelha.svg" width={16} height={16} alt="cabelo"/>
-                Sobrancelha
-            </Button>
-
-            <Button className=" gap-2 " variant="secondary">
-                <Image src="/massagem.svg" width={16} height={16} alt="cabelo"/>
-                Massagem
-            </Button>
-
-            <Button className=" gap-2 " variant="secondary">
-                <Image src="/hidratacao.svg" width={16} height={16} alt="cabelo"/>
-                Hidratação
-            </Button>
         </div>
 
 
@@ -75,35 +52,9 @@ return <div>
            src="/banner-01.png" fill className="rounded-xl object-cover"/> 
         </div>
          {/*AGENDAMENTO*/}
-         <h2 className="mt-6 mb-3 uppercase text-xs font-bold text-gray-400
-         " >Agendamentos</h2>
-         <div>
-         <Card>
-            
-            <CardContent className="flex justify-between p-0">
-                {/*div esquerda*/} 
-                <div className="flex flex-col gap-2 py-5 pl-5">
-                    <Badge className="w-fit" >Confirmado</Badge>
-                    <h3 className="font-semibold" >Corte de Cabelo</h3>
-                
-                    <div className="flex items-center gap-2">
-                    <Avatar className="h-6 w-6">
-                        <AvatarImage src="https://cdn-icons-png.flaticon.com/512/4042/4042356.png"/>
-                    </Avatar>
-                    <p className="text-sm" >Barbearia name</p>
+         <BookingItem/>
 
-                    </div>
-                </div>
-               {/*div direita*/} 
-             <div className="flex flex-col items-center justify-center border-l-2 border-solid px-5" >
-                <p className="text-sm" > Agosto </p>
-                <p className="text-2xl" >05</p>
-                <p className="text-sm" >20:00</p>
-
-               </div>
-            </CardContent>
-         </Card>  
-
+        <div>
           <h2 className="mt-6 mb-3 uppercase text-xs font-bold text-gray-400
          " >Recomendados</h2> 
 
