@@ -7,7 +7,7 @@ import { quickSearchOptions } from "../_constants/search";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { Avatar } from "./ui/avatar";
 import Link from "next/link";
-import SlidebarSheet from "./slidebar-Sheet";
+import SlidebarSheet from "./sidebar-Sheet";
 
 
 

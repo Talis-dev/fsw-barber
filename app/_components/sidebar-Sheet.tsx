@@ -3,13 +3,12 @@ import { Button } from "./ui/button";
 import { CalendarIcon, HomeIcon, LogOutIcon, } from "lucide-react";
 import { SheetClose, SheetContent, SheetHeader, SheetTitle} from "./ui/sheet";
 import { quickSearchOptions } from "../_constants/search";
-import { AvatarImage } from "@radix-ui/react-avatar";
-import { Avatar } from "./ui/avatar";
+import { Avatar, AvatarImage  } from "./ui/avatar";
 import Link from "next/link";
 
 
 
-const SlidebarSheet = () => {
+const SidebarSheet = () => {
     return ( 
 
         <SheetContent className="overflow-y-auto">
@@ -64,4 +63,4 @@ const SlidebarSheet = () => {
      );
 }
  
-export default SlidebarSheet ;
+export default SidebarSheet ;

@@ -1,6 +1,6 @@
 import PhoneItem from "@/app/_components/phone-item";
 import ServiceItem from "@/app/_components/service-item";
-import SlidebarSheet from "@/app/_components/slidebar-Sheet";
+import SlidebarSheet from "@/app/_components/sidebar-Sheet";
 import { Button } from "@/app/_components/ui/button";
 import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
 import { db } from "@/app/_lib/prisma";
