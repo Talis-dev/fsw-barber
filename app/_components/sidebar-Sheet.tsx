@@ -5,7 +5,8 @@ import { SheetClose, SheetContent, SheetHeader, SheetTitle} from "./ui/sheet";
 import { quickSearchOptions } from "../_constants/search";
 import { Avatar, AvatarImage  } from "./ui/avatar";
 import Link from "next/link";
-
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { FcGoogle } from "react-icons/fc"
 
 
 const SidebarSheet = () => {
@@ -15,15 +16,32 @@ const SidebarSheet = () => {
             <SheetHeader>
                 <SheetTitle className="text-left">Menu</SheetTitle>
             </SheetHeader>
-            <div className="border-b border-solid flex items-center">
+            <div className="border-b border-solid flex items-center justify-between">
             <Avatar className="h-12 w-12 ">
                     <AvatarImage src="https://cdn-icons-png.flaticon.com/512/4042/4042356.png"/>
                 </Avatar>
 
                 <div>
-                  <p className="px-2 font-bold text-xl">User Name</p>
-                  <p className="px-2  text-xs">username@mail.com</p>
+                  <p className="pr-9 font-bold text-x ">Olá, faça seu login!</p>
                  </div>
+                 <Dialog>
+                    <DialogTrigger asChild>
+                        <Button size="icon">
+                         <LogOutIcon/>
+                        </Button>   
+                    </DialogTrigger>
+                    <DialogContent className="w-[90%] rounded-xl">
+                        <DialogHeader>
+                            <DialogTitle> Faça login na plataforma</DialogTitle>
+                            <DialogDescription>Conecte-se usando sua conta Google</DialogDescription>
+                        </DialogHeader>
+                        <Button variant="outline" className="gap-2 font-bold">
+                            <FcGoogle size={30}/>
+                            Google
+                        </Button>
+                    </DialogContent>
+                 </Dialog>
+
             </div>
             
 
