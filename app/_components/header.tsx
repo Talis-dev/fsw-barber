@@ -13,8 +13,10 @@ import SlidebarSheet from "./sidebar-Sheet";
 
 const Header = () => (<Card>
     <CardContent className="flex flex-row itens-center justify-between p-5">
-        <Image alt="Fsw barber" src="/Logo.png" height={18} width={120} />
-
+       <Link href="/">
+        <Image alt="Fsw barber" src="/Logo1.svg" height={25} width={130} 
+        className="py-2"/>
+        </Link>
 
         <Sheet>
             <SheetTrigger asChild>
