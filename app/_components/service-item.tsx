@@ -119,7 +119,6 @@ const handleCreateBooking = async () => {
     
         await createBooking({
             serviceId: service.id,
-            userId: (data?.user as any).id,
             date: newdate,
         })
         handleBookingSheetOpenChange()
