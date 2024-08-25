@@ -86,9 +86,12 @@ const SidebarSheet = () => {
                         </Button>   
                     </SheetClose>
                 
-                <Button className="justify-start gap-2" variant="ghost">
+                <Button className="justify-start gap-2" variant="ghost" asChild>
+                    <Link href={"/bookings"}>
                     <CalendarIcon size={18} />
-                    Agendamentos</Button>
+                    Agendamentos                    
+                    </Link>
+                    </Button>
             </div>
 
             <div className="py-5 gap-2 flex flex-col border-b border-solid">
