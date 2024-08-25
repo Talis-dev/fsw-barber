@@ -7,11 +7,13 @@ import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader } from "./ui/
 import { Calendar } from "./ui/calendar";
 import { ptBR } from "date-fns/locale";
 import { useEffect, useState } from "react";
-import { addDays, format, set} from "date-fns";
+import { format, set} from "date-fns";
 import { createBooking } from "../_actions/create-booking";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import { getBookings } from "../_actions/get-bookings";
+import { Dialog } from "./ui/dialog";
+import SignInDialog from "./sign-in-dialog";
 
 interface ServiceItemProps {
   service: BarbershopService;
@@ -62,7 +64,8 @@ const getTimelist = (bookings: Booking[]) =>{
 
 
 const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
-    const {data} = useSession()
+  const [SignInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
+  const {data} = useSession()
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string | undefined>(undefined);
 
@@ -78,6 +81,14 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     }
     fetch()
  })
+
+const handleBooingClick = () =>{
+    if (data?.user) {
+       return setBookingSheetIsOpen(true)  
+    }
+    return setSignInDialogIsOpen(true)
+}
+
  const[bookingSheetIsOpen, setBookingSheetIsOpen] = useState(false)
 
   const handleBookingSheetOpenChange = () =>{
@@ -121,6 +132,7 @@ const handleCreateBooking = async () => {
 
 }
   return (
+    <>
     <Card>
       <CardContent className="flex items-center gap-3 p-3">
         {/*IMAGEM */}
@@ -154,7 +166,7 @@ const handleCreateBooking = async () => {
             
                 <Button variant="secondary" 
                 size="sm"
-                onClick={()=> setBookingSheetIsOpen(true) }>
+                onClick={handleBooingClick}>
                   Reservar
                 </Button>
               <SheetContent>
@@ -165,7 +177,7 @@ const handleCreateBooking = async () => {
                     locale={ptBR}
                     selected={selectedDay}
                     onSelect={handleDateSelect}
-                    fromDate={addDays(new Date(),1)}
+                    fromDate={new Date()}
                   />
                 </div>
                 {selectedDay && (
@@ -235,6 +247,12 @@ const handleCreateBooking = async () => {
         </div>
       </CardContent>
     </Card>
+
+    <Dialog open={SignInDialogIsOpen} onOpenChange={(open) =>
+         setSignInDialogIsOpen(open)}>
+        <SignInDialog/>
+    </Dialog>
+    </>
   );
 };
 
