@@ -1,12 +1,20 @@
+"use client"
+
+
 import { Prisma } from "@prisma/client";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { Card, CardContent } from "./ui/card";
 import { format, isFuture } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import Image from "next/image";
 import PhoneItem from "./phone-item";
+import { Button } from "./ui/button";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { deleteBooking } from "../_actions/delete-booking";
+import { toast } from "sonner";
+import { useState } from "react";
 
 
 interface BookingItemProps {
@@ -24,11 +32,25 @@ interface BookingItemProps {
 // TODO: receber agendamento como prop
 
 const BookingItem = ({ booking }: BookingItemProps) => {
+  const [isSheetOpen, setIsSheetOpen] = useState(false)
+
   const {service: {barbershop}} = booking
   const isConfirmed = isFuture(booking.date) 
-
+  const handleCancelBooking = async () =>{
+try {
+   await deleteBooking(booking.id)
+   toast.success("Reserva cancelada com sucesso!")
+   setIsSheetOpen(false)
+} catch (error){
+  console.error();
+  toast.error("Erro ao cancelar a reserva. Tente novamente.")
+}
+  }
+  const handleSheetOpenChange = (isOpen: boolean) => {
+    setIsSheetOpen(isOpen)
+  }
   return (
-    <Sheet>
+    <Sheet open={isSheetOpen} onOpenChange={handleSheetOpenChange}>
       <SheetTrigger className="w-[80%]">
       <Card className="min-w-[90%]">
           <CardContent className="flex justify-between p-0">
@@ -121,7 +143,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                           </div>
                         </CardContent>
                       </Card>
-                      
+
                       <div className="space-y-3">
                        {barbershop.phones.map((phone)=>(
                       <PhoneItem key={phone} phone={phone}/>
@@ -130,8 +152,46 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                 
         </div>
 
-      </SheetContent>
+        <SheetFooter className="mt-6">
+          <div className="flex items-center gap-3">
+            <SheetClose asChild>
+            <Button variant="outline" className="w-full" >Voltar</Button>              
+            </SheetClose>
+            {isConfirmed && (
+              <Dialog>
 
+              <DialogTrigger className="w-full">
+              <Button variant="destructive" className="w-full">
+            Cancelar reserva
+            </Button>                  
+              </DialogTrigger>
+
+              <DialogContent className="w-[90%]">
+                <DialogHeader>
+                  <DialogTitle>Você quer cancelar sua reserva?</DialogTitle>
+                  <DialogDescription>
+                    Tem certeza que deseja fazer o cancelamento? Essa ação não pode ser revertida
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter className="flex flex-row gap-3">
+                  <DialogClose asChild>
+                    <Button variant="secondary" className="w-full">Voltar</Button>
+                                     
+                  </DialogClose>
+                  <DialogClose className="w-full">
+                    <Button variant="destructive"className="w-full" onClick={handleCancelBooking}>Comfirmar</Button>  
+                  </DialogClose>
+                     
+                </DialogFooter>
+              </DialogContent>
+            </Dialog> // video continua no 1:34:00... apagar e usar um
+            
+            )}
+            
+          </div>
+        </SheetFooter>
+
+      </SheetContent>
     </Sheet>
 
   );
