@@ -12,8 +12,8 @@ import {
 } from "./ui/sheet";
 import { Calendar } from "./ui/calendar";
 import { ptBR } from "date-fns/locale";
-import { useEffect, useState } from "react";
-import { format, set } from "date-fns";
+import { useEffect, useMemo, useState } from "react";
+import { format, isPast, isToday, set } from "date-fns";
 import { createBooking } from "../_actions/create-booking";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
@@ -48,11 +48,26 @@ const TIME_LIST = [
   "16:00",
   "16:30",
   "17:00",
+  "18:00",
+  "18:30",
+  "19:00",  
+  "19:30",  
 ];
-const getTimelist = (bookings: Booking[]) => {
+
+interface GetTimeListProps {
+  bookings: Booking[]
+  selectedDay: Date
+}
+
+const getTimelist = ({bookings, selectedDay}: GetTimeListProps) => {
   return TIME_LIST.filter((time) => {
     const hour = Number(time.split(":")[0]);
     const minutes = Number(time.split(":")[1]);
+
+    const timeIsOnThePast = isPast(set(new Date(),{hours: hour, minutes}))
+    if (timeIsOnThePast && isToday(selectedDay)){
+      return false
+    }
 
     const hasbookingOnCurrentTime = bookings.some(
       (booking) =>
@@ -132,6 +147,15 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       toast.error("Erro ao criar Reserva !");
     }
   };
+
+    const timelist = useMemo(()=>{
+      if (!selectedDay) return []
+return getTimelist ({
+        bookings: dayBookings,
+        selectedDay,
+       })
+    },[dayBookings, selectedDay])
+
   return (
     <>
       <Card>
@@ -188,7 +212,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                       className="flex overflow-x-auto p-5 gap-3 border-b border-solid
                 [&::-webkit-scrollbar]:hidden "
                     >
-                      {getTimelist(dayBookings).map((time) => (
+                      {timelist.length > 0 ? timelist.map((time) => (
                         <Button
                           key={time}
                           variant={
@@ -199,7 +223,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                         >
                           {time}
                         </Button>
-                      ))}
+                      )) : <p className="text-sm">Não há horários disponiveis para este dia.</p> }
                     </div>
                   )}
 
