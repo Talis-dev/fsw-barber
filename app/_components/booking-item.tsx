@@ -29,7 +29,7 @@ interface BookingItemProps {
   }>;
 }
 
-// TODO: receber agendamento como prop
+
 
 const BookingItem = ({ booking }: BookingItemProps) => {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
