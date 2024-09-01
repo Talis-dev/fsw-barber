@@ -94,9 +94,12 @@ const Home = async () => {
           />
         </div>
         {/*AGENDAMENTO*/}
+
+        {confirmedbookings.length > 0 && (
         <h2 className="mt-6 mb-3 uppercase text-xs font-bold text-gray-400">
           Agendamentos
         </h2>
+        )}
 
         <div className=" flex overflow-x-auto gap-2 [&::-webkit-scrollbar]:hidden ">
           {confirmedbookings.map((booking) => (

@@ -51,7 +51,7 @@ try {
   }
   return (
     <Sheet open={isSheetOpen} onOpenChange={handleSheetOpenChange}>
-      <SheetTrigger className="w-[80%]">
+      <SheetTrigger className="w-full min-w-[85%]">
       <Card className="min-w-[90%]">
           <CardContent className="flex justify-between p-0">
             {/*div esquerda*/}
