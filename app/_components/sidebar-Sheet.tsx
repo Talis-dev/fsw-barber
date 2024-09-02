@@ -7,16 +7,8 @@ import { SheetClose, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import { quickSearchOptions } from "../_constants/search";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/dialog";
-import { FcGoogle } from "react-icons/fc";
-import { signIn, signOut, useSession } from "next-auth/react";
+import {Dialog,DialogTrigger,} from "./ui/dialog";
+import { signOut, useSession } from "next-auth/react";
 import SignInDialog from "./sign-in-dialog";
 
 const SidebarSheet = () => {
@@ -73,7 +65,8 @@ const SidebarSheet = () => {
         </SheetClose>
 
         <Button className="justify-start gap-2" variant="ghost" asChild>
-          <Link href={"/bookings"}>
+        
+        <Link href={data?.user ? "/bookings" : "/"}>
             <CalendarIcon size={18} />
             Agendamentos
           </Link>
