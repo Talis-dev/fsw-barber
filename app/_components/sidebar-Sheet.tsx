@@ -16,7 +16,7 @@ const SidebarSheet = () => {
   const handleLogoutClick = () => signOut();
 
   return (
-    <SheetContent className="overflow-y-auto">
+    <SheetContent className="overflow-y-auto min-w-[80%]">
       <SheetHeader>
         <SheetTitle className="text-left">Menu</SheetTitle>
       </SheetHeader>

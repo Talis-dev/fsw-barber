@@ -15,7 +15,7 @@ selectedDate: Date
 
 const BookingSummary = ({service, barbershop, selectedDate }: BookingSummaryProps) => {
     return ( 
-        <Card className="my-5">
+        <Card className="my-3 ">
         <CardContent className="p-3 space-y-2">
           <div className="flex justify-between items-center ">
             <h2 className="font-bold">{service.name}</h2>
@@ -49,4 +49,4 @@ const BookingSummary = ({service, barbershop, selectedDate }: BookingSummaryProp
      );
 }
  
-export default BookingSummary; 
+export default BookingSummary;  
