@@ -26,7 +26,7 @@
     "date-fns": "^3.6.0",
     "fsw-barber": "file:",
     "lucide-react": "^0.416.0",
-    "next": "14.2.14",
+    "next": "15.5.24",
     "next-auth": "^4.24.15",
     "next-themes": "^0.3.0",
     "react": "18.3.1",
